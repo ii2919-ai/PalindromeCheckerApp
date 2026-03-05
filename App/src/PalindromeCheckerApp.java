@@ -1,88 +1,27 @@
-class Node {
-    char data;
-    Node next;
-
-    Node(char data) {
-        this.data = data;
-        this.next = null;
-    }
-}
-
 public class PalindromeCheckerApp {
 
-    // Create linked list from string
-    public static Node createList(String str) {
-        Node head = null;
-        Node tail = null;
+    // Recursive function to check palindrome
+    static boolean isPalindrome(String str, int start, int end) {
 
-        for (int i = 0; i < str.length(); i++) {
-            Node newNode = new Node(str.charAt(i));
-
-            if (head == null) {
-                head = newNode;
-                tail = newNode;
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-            }
-        }
-        return head;
-    }
-
-    // Reverse linked list
-    public static Node reverse(Node head) {
-        Node prev = null;
-        Node current = head;
-        Node next;
-
-        while (current != null) {
-            next = current.next;
-            current.next = prev;
-            prev = current;
-            current = next;
-        }
-
-        return prev;
-    }
-
-    // Check palindrome
-    public static boolean isPalindrome(Node head) {
-
-        if (head == null || head.next == null)
+        // Base condition
+        if (start >= end)
             return true;
 
-        Node slow = head;
-        Node fast = head;
+        // Check characters
+        if (str.charAt(start) != str.charAt(end))
+            return false;
 
-        // Find middle
-        while (fast != null && fast.next != null) {
-            slow = slow.next;
-            fast = fast.next.next;
-        }
-
-        // Reverse second half
-        Node secondHalf = reverse(slow);
-        Node firstHalf = head;
-
-        // Compare both halves
-        while (secondHalf != null) {
-            if (firstHalf.data != secondHalf.data)
-                return false;
-
-            firstHalf = firstHalf.next;
-            secondHalf = secondHalf.next;
-        }
-
-        return true;
+        // Recursive call
+        return isPalindrome(str, start + 1, end - 1);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
+    {
 
-        String input = "madam";
+        String str = "madam";
 
-        Node head = createList(input);
-
-        if (isPalindrome(head))
+        if (isPalindrome(str, 0, str.length() - 1))
             System.out.println("Palindrome");
         else
             System.out.println("Not a Palindrome");
