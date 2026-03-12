@@ -1,29 +1,38 @@
+import java.util.Scanner;
+
 public class PalindromeCheckerApp {
 
-    // Recursive function to check palindrome
-    static boolean isPalindrome(String str, int start, int end) {
+    public static boolean isPalindrome(String str) {
+        // Normalize string: remove spaces and non-alphanumeric characters
+        str = str.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
 
-        // Base condition
-        if (start >= end)
-            return true;
+        int left = 0;
+        int right = str.length() - 1;
 
-        // Check characters
-        if (str.charAt(start) != str.charAt(end))
-            return false;
+        // Palindrome check
+        while (left < right) {
+            if (str.charAt(left) != str.charAt(right)) {
+                return false;
+            }
+            left++;
+            right--;
+        }
 
-        // Recursive call
-        return isPalindrome(str, start + 1, end - 1);
+        return true;
     }
 
-    public static void main(String[] args)
-    {
-    {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
 
-        String str = "madam";
+        System.out.print("Enter a string: ");
+        String input = sc.nextLine();
 
-        if (isPalindrome(str, 0, str.length() - 1))
-            System.out.println("Palindrome");
-        else
-            System.out.println("Not a Palindrome");
+        if (isPalindrome(input)) {
+            System.out.println("The string is a palindrome (ignoring spaces and case).");
+        } else {
+            System.out.println("The string is not a palindrome.");
+        }
+
+        sc.close();
     }
 }
